@@ -5,6 +5,7 @@ module.exports = {
     name: 'rule',
     minArgs: 1,
     maxArgs: 1,
+    roles: ['Staff'],
     execute(message, args) {
         if(isNaN(args[0])) {
             message.channel.send(`Please provide an integer from 1-15`);
