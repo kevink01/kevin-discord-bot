@@ -1,0 +1,27 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevink01/test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevink01/test/issues"
+  },
+  "homepage": "https://github.com/kevink01/test#readme",
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "node.js": "^0.0.1-security"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
