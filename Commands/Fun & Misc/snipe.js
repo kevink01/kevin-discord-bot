@@ -1,5 +1,5 @@
 const { snipes } = require('../../Events/messageDelete')
-const { Discord } = require('../../main')
+const { Discord } = require('../../index')
 
 module.exports = {
     name: 'snipe',

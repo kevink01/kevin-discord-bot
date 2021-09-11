@@ -1,4 +1,4 @@
-const { Discord } = require('../../main');
+const { Discord } = require('../../index');
 module.exports = {
     name: 'emote',
     args: `<choice> <emoji> [emoji_name]`,

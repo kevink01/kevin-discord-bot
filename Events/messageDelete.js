@@ -1,4 +1,4 @@
-const { Discord } = require('../main')
+const { Discord } = require('../index')
 module.exports = {
     name: 'messageDelete',
     on: true,

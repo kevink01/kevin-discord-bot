@@ -1,5 +1,5 @@
 const { rules } = require('../../Utility/rules');
-const { Discord } = require('../../main');
+const { Discord } = require('../../index');
 
 module.exports = {
     name: 'rule',

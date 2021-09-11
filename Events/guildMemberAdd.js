@@ -1,5 +1,5 @@
 const { invites } = require('./ready')
-const { Discord } = require('../main');
+const { Discord } = require('../index');
 
 module.exports = {
     name: 'guildMemberAdd',
