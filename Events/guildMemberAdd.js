@@ -5,7 +5,11 @@ module.exports = {
     name: 'guildMemberAdd',
     on: true,
     async execute(member) {
-        const channel = member.guild.channels.cache.find(ch => ch.id === '776940464837623852');
+        const channel = member.guild.channels.cache.find(ch => ch.id === '872523760228503603');
+        if (!channel) {
+            console.log('Could not find the channel.');
+            return;
+        }
         const guildInvites = invites.get(member.guild.id);
         var inv = undefined;
         await member.guild.invites.fetch().then(list => {
