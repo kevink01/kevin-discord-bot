@@ -40,9 +40,9 @@ module.exports = {
             await member.guild.fetchVanityData().then(link => vanity = link.uses);
             if (vanity > guildInvites.get(member.guild.vanityURLCode)) {
                 memberJoin.addFields(
-                    { name: 'Created Account', value: `${new Date(member.createdTimestamp).toLocaleTimeString()}`},
+                    { name: 'Created Account', value: `${new Date(member.user.createdTimestamp).toLocaleDateString()}`},
                     { name: 'Invited by', value: 'Vanity URL', inline: true },
-                    { name: 'Invite count', value: vanity, inline: true },
+                    { name: 'Invite count', value: `${vanity}`, inline: true },
                     { name: 'Invite URL', value: `https://discord.gg/${member.guild.vanityURLCode}` }
                 )
                 guildInvites.set(member.guild.vanityURLCode, vanity);
