@@ -3,6 +3,8 @@ const { Discord } = require('../../index')
 
 module.exports = {
     name: 'snipe',
+    roles: ['Member'],
+    description: 'Gets the last message that was deleted in the channel',
     execute(message, args) {
         let sniped = snipes.get(message.channel.id);
         if (!sniped) {

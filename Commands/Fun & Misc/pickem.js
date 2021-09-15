@@ -9,6 +9,10 @@ module.exports = {
     permissions: [],
     roles: ['Staff'],
     channels: ['836777690983694356'],    // NFL pickem channel
+    description: 'Provides with a pickem layout for a given week',
+    examples: [
+        '+pickem 3 -> Provides pickem for week 3'
+    ],
     async execute(message, args) {
         if (isNaN(args[0])) {
             message.channel.send(`Please enter a number between 1-18.`);

@@ -4,9 +4,15 @@ module.exports = {
     args: `<choice> <emoji> [emoji_name]`,
     minArgs: 2,
     maxArgs: 3,
-    roles: [],
+    roles: ['Staff'],
     permissions: ['MANAGE_EMOJIS_AND_STICKERS'],
-    channels: [],
+    description: 'A utility command to add and remove emojis and stickers to the guild, as well change the name of the emoji/sticker',
+    examples: [
+        '+emote add :ExampleEmote: -> Adds :ExampleEmote: to the guild',
+        '+emote add :ExampleEmote: newName -> Adds :newName: to the guild',
+        '+emote remove :ExampleEmote: -> Remove :ExampleEmote: from the guild',
+        '+emote rename :ExampleEmote: newName -> Changes the name of :ExampleEmote: to :newName:'
+    ],
     execute(message, args) {
         let choice = args[0].toLowerCase();
         let emoji = Discord.Util.parseEmoji(args[1]);
@@ -36,7 +42,6 @@ module.exports = {
                     }
                     break;
                 case 'rename':
-                    console.log('Test');
                     let renameEmote = message.guild.emojis.cache.find(e => e.id === emoji.id);
                     if (renameEmote) {
                         try {
