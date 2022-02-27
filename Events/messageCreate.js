@@ -3,7 +3,7 @@ const { client } = require('../index');
 module.exports = {
     name: 'messageCreate',
     on: true, 
-    execute(message) {
+    async execute(message) {
         if (message.channel.id === '864502428958588968') {
             const embed = message.embeds[0];
             if (!embed) {
