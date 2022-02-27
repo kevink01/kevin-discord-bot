@@ -38,4 +38,5 @@ console.log(`-> Registring folder: Commands`);
 read('Commands');
 console.log(`-> Registring folder: Events`);
 read('Events');
+
 client.login(process.env.TOKEN);

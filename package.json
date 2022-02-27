@@ -19,6 +19,8 @@
   "homepage": "https://github.com/kevink01/test#readme",
   "dependencies": {
     "discord.js": "^13.1.0",
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.2.3",
     "node.js": "^0.0.1-security"
   },
   "engines": {
