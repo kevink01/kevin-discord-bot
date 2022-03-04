@@ -6,6 +6,7 @@ module.exports = {
     on: true,
     snipes: new Discord.Collection(),
     async execute(message) {
+        if (message.author.bot) return;
         const guild = message.guild.id;
         const channel = message.channel.id;
         const deleted = await schema.snipes.findOne({

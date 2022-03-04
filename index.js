@@ -3,6 +3,7 @@ const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD
 module.exports = { client, Discord };
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 const commandHandle = require('./Handlers/command-handle');
 const eventHandle = require('./Handlers/event-handle.js');
 
