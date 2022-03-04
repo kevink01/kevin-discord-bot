@@ -9,7 +9,7 @@ module.exports = {
         await mongoose.connect(process.env.URI, {
             keepAlive: true
         }).then(
-            console.log('Connection to bot successful!')
+            console.log('Connection to mongodb successful!')
         );
         console.log('The bot is online!');
         client.guilds.cache.forEach(guild => {
