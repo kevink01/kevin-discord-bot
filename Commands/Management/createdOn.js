@@ -5,7 +5,6 @@ module.exports = {
     args: '<user>',
     minArgs: 1,
     maxArgs: 1,
-    roles: ['Staff'],
     description: 'Provids information about a user\'s joined date and created account date',
     examples: [
         '+createdOn @UserTag',

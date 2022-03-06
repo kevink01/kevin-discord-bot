@@ -6,9 +6,7 @@ module.exports = {
     args: `<week>`,
     minArgs: 1,
     maxArgs: 1,
-    permissions: [],
-    roles: ['Staff'],
-    channels: ['836777690983694356'],    // NFL pickem channel
+    permissions: ['ADMINISTRATOR'],
     description: 'Provides with a pickem layout for a given week',
     examples: [
         '+pickem 3 -> Provides pickem for week 3'

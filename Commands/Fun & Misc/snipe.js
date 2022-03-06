@@ -3,7 +3,6 @@ const schema = require('../../Mongoose/schema.js');
 
 module.exports = {
     name: 'snipe',
-    //roles: ['Member'],
     description: 'Gets the last message that was deleted in the channel',
     async execute(message, args) {
         const guild = message.guild.id;
