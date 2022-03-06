@@ -4,7 +4,6 @@ const schema = require('../Mongoose/schema.js');
 module.exports = {
     name: 'messageDelete',
     on: true,
-    snipes: new Discord.Collection(),
     async execute(message) {
         if (message.author.bot) return;
         const guild = message.guild.id;

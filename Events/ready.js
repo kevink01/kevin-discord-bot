@@ -9,9 +9,9 @@ module.exports = {
         await mongoose.connect(process.env.URI, {
             keepAlive: true
         }).then(
-            console.log('Connection to mongodb successful!')
+            console.log('   << Connection to mongodb successful!')
         );
-        console.log('The bot is online!');
+        
         client.guilds.cache.forEach(guild => {
             let inviteList = new Discord.Collection();
             guild.invites.fetch().then(async (invite) => {
@@ -23,6 +23,8 @@ module.exports = {
                 }
                 this.invites.set(guild.id, inviteList);
             })
-        })
+        });
+        console.log('   << The bot is online!');
+        console.log('<< Login successful!');
     }
 }

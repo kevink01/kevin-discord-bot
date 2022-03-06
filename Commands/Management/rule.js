@@ -6,7 +6,6 @@ module.exports = {
     args: '<num>',
     minArgs: 1,
     maxArgs: 1,
-    roles: ['Staff'],
     description: 'Replies with an embed containing the rule number provided as an argument',
     examples: ['+rule 7: Replies with an embed containing what rule #7 is', '+rule 13: Replies with an embed containing what rule #13 is'],
     execute(message, args) {
