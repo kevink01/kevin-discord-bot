@@ -26,5 +26,6 @@ module.exports = {
         });
         console.log('   << The bot is online!');
         console.log('<< Login successful!');
+        client.user.setActivity('Green Day', {type: 'LISTENING'});
     }
 }
