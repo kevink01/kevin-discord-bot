@@ -7,9 +7,7 @@ require('dotenv').config();
 const commandHandle = require('./Handlers/command-handle');
 const eventHandle = require('./Handlers/event-handle.js');
 
-
 client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
 
 const subDirectory = (file1, file2) => {
     if (file2 === null) {
@@ -41,7 +39,6 @@ const read = (dir) => {
         }
     }
 }
-
 console.log('>> Registring folder: Commands');
 read('Commands');
 console.log('   << Finished reading Commands!');

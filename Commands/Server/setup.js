@@ -1,27 +1,25 @@
 const { Discord } = require('../../index.js');
 const schema = require('../../Mongoose/schema.js');
 const questions = require('../../Utility/setup.json');
+const { delay } = require('../../Utility/functions.js');
 
-async function delay(ms) {
-    return new Promise (res => setTimeout(res, ms));
-}
-
-function updateDescription(status, data, x, max) {
-    let string = '';
-    for (let i = 0; i < max; i++) {
-        if (i === x) {
-            status[i] = `-> ${questions[i]}`;
-        }
-        else {
-            status[i] = questions[i];
-        }
-        if (i < x) {
-            status[i] += ": " + data[i];
-        }
-        string += status[i] + "\n";
+function updateEmbed(setup, data, i) {
+    setup.setTitle('Setting up');
+    setup.setDescription('If you want to create a channel/role, type \'create\'\nTo exit the setup, type \'exit\'');
+    setup.setColor('DARK_ORANGE');
+    setup.setFooter('⚠️ = required');
+    if (i === 0) {
+        setup.addFields(
+            { name: 'Previous input:', value: 'N/A', inline: true },
+            { name: 'Current input:', value: questions[0], inline: true  }
+        );
     }
-    return string;
+    else {
+        setup.fields[0] = { name: 'Previous input:', value: `${questions[i - 1]}: ${data[i - 1]}`, inline: true };
+        setup.fields[1] = { name: 'Current input:', value: questions[i], inline: true };
+    }
 }
+
 async function askSetup(setup, setupMessage) {
     const filter = async m => await !m.author.bot;
     const maxCount = questions.length;
@@ -30,11 +28,8 @@ async function askSetup(setup, setupMessage) {
     let status = [];
     let channel = setupMessage.channel;
     for (let i = 0; i < maxCount; i++) {
-        setup.setTitle("Entering fields...")
-        await setup.setDescription(updateDescription(status, data, i, maxCount));
-        setup.setFooter('Fields with (*) at the end are required. If you want to skip, type \'N/A\'');
-        setup.setColor('ORANGE');
-        setupMessage.edit( { embeds: [setup] } );
+        await updateEmbed(setup, data, i);
+        setupMessage.edit( {embeds: [setup] } );
         await setupMessage.channel.awaitMessages({ filter, max: 1})
         .then(async (collected) => {
             let response = collected.first();
@@ -58,7 +53,7 @@ async function askSetup(setup, setupMessage) {
                         }
                         else {
                             data[count] = response.content;
-                            await delay(3000);
+                            await delay(1000);
                             count++;
                         }
                         response.delete();
@@ -70,6 +65,25 @@ async function askSetup(setup, setupMessage) {
                             data[count] = undefined;
                             await delay(3000);
                             count++;
+                        }
+                        else if (response.content.toLowerCase() === 'create') {
+                            setup.setTitle('Creating a channel');
+                            setup.setDescription('');
+                            setup.setColor('YELLOW');
+                            setupMessage.edit( {embeds: [setup] } );
+                            await delay(2000);
+                            let choice;
+                            if (i === 1) choice = 'welcome';
+                            else if (i === 2) choice = 'verification';
+                            else choice = 'logs';
+                            const channel = await setupMessage.guild.channels.create(choice, { type: 'GUILD_TEXT'});
+                            setup.setTitle('Success!');
+                            setup.setColor('GREEN');
+                            setup.setDescription(`Created channel: ${channel}`);
+                            setupMessage.edit( {embeds: [setup] } );
+                            data[count] = `<#${channel.id}>`;
+                            await delay(3000);
+                            count++;                            
                         }
                         else if (!response.content.startsWith('<')) {
                             const alert = await channel.send('Invalid channel. Try again.');
@@ -89,7 +103,7 @@ async function askSetup(setup, setupMessage) {
                             }
                             else {
                                 data[count] = response.content;
-                                await delay(3000);
+                                await delay(1000);
                                 count++;
                             }
                         }
@@ -102,8 +116,25 @@ async function askSetup(setup, setupMessage) {
                             await delay(3000);
                             count++;
                         }
+                        else if (response.content.toLowerCase() === 'create') {
+                            setup.setTitle('Creating a role');
+                            setup.setDescription('');
+                            setup.setColor('YELLOW');
+                            setupMessage.edit( {embeds: [setup] } );
+                            await delay(2000);
+                            let choice;
+                            if (i === 4) choice = 'Muted';
+                            else choice = 'Member';
+                            const role = await setupMessage.guild.roles.create( { name: choice } );
+                            setup.setColor('GREEN');
+                            setup.setDescription(`Created channel: ${role}`);
+                            setupMessage.edit( {embeds: [setup] } );
+                            data[count] = `<@&${role.id}>`;
+                            await delay(3000);
+                            count++;                            
+                        }
                         else if (!response.content.startsWith('<')) {
-                            const alert = await channel.send('Invalid channel. Try again.');
+                            const alert = await channel.send('Invalid role. Try again.');
                             await delay(2000);
                             alert.delete();
                             i--;
@@ -119,7 +150,7 @@ async function askSetup(setup, setupMessage) {
                             }
                             else {
                                 data[count] = response.content;
-                                await delay(3000);
+                                await delay(1000);
                                 count++;
                             }
                         }   
@@ -132,7 +163,12 @@ async function askSetup(setup, setupMessage) {
     if (count === maxCount) {
         setup.setTitle('Finished with setup! Please wait to save these changed.');
         setup.setColor('YELLOW');
-        await setup.setDescription(updateDescription(status, data, count, maxCount));
+        setup.fields = [];
+        let description = '';
+        for (let i = 0; i < maxCount; i++) {
+            description += `${questions[i]}: ${data[i]}\n`;
+        }
+        setup.setDescription(description);
         setupMessage.edit( { embeds: [setup] } );
         let insert = [];
         for (let i = 0; i < maxCount; i++) {
@@ -188,35 +224,45 @@ module.exports = {
         });
         if (found) {
             setup.setTitle("This bot has already been setup for this server");
-            setup.setDescription(`Do you want to overwrite the setup?
-            Type 'yes' to overwrite this data. (YOU CANNOT UNDO THIS)
-            Type 'no' or anything else to cancel`);
+            setup.setDescription('Do you want to overwrite the setup?');
+            setup.addFields(
+                { name: 'yes', value: 'Type \'yes\'', inline: true },
+                { name: 'no', value: 'Type \'no\'', inline: true }
+            )
             setup.setColor("YELLOW");
             setupMessage.edit( { embeds: [setup] });
-            await message.channel.awaitMessages({ filter, max: 1 })
-            .then(async (collected) => {
-                let response_msg = collected.first();
-                let response = response_msg.content;
-                response_msg.delete();
-                if (response !== 'yes'){
-                    setup.setDescription("Cancelling setup! Please wait a few seconds");
-                    setup.setColor("RED");
-                    setupMessage.edit( { embeds: [setup] });
-                    await delay(2000);
-                    setupMessage.delete();
-                    message.delete();
-                    return;
-                }
-                else {
-                    found.delete();
-                    setup.setTitle("Deleting the setup!");
-                    setup.setDescription('Please wait a few seconds to proceed setup...');
-                    setup.setColor("GREEN");
-                    setupMessage.edit( { embeds: [setup] });
-                    await delay(2000);
-                    askSetup(setup, setupMessage);
-                }
-            });
+            let answer = false;
+            while (!answer) {
+                await message.channel.awaitMessages({ filter, max: 1 })
+                .then(async (collected) => {
+                    let response_msg = collected.first();
+                    let response = response_msg.content.toLowerCase();
+                    response_msg.delete();
+                    if (response === 'no'){
+                        answer = true;
+                        setup.setTitle("Cancelling setup! Please wait a few seconds");
+                        setup.setDescription('');
+                        setup.setColor("RED");
+                        setup.fields = [];
+                        setupMessage.edit( { embeds: [setup] });
+                        await delay(2000);
+                        setupMessage.delete();
+                        message.delete();
+                        return;
+                    }
+                    else if (response === 'yes') {
+                        answer = true;
+                        found.delete();
+                        setup.setTitle("Deleting the setup!");
+                        setup.setDescription('Please wait a few seconds to proceed setup...');
+                        setup.setColor("GREEN");
+                        setup.fields = [];
+                        setupMessage.edit( { embeds: [setup] });
+                        await delay(2000);
+                        askSetup(setup, setupMessage);
+                    }
+                });
+            }
         }
         else {
             setup.setTitle("This bot hasn't been setup");
@@ -226,5 +272,6 @@ module.exports = {
             await delay(2000);
             askSetup(setup, setupMessage);
         }
+        
     }
 }

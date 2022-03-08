@@ -5,7 +5,7 @@ module.exports = (client, requirements) => {
         channels = [],
     } = requirements;
 
-    // Converts into array
+    // Converts alias into an array
     if (typeof name === 'string') {
         name = [name];
     }

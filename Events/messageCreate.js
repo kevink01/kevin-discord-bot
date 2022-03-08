@@ -1,5 +1,6 @@
 const { client } = require('../index')
-const schema = require('../Mongoose/schema.js')
+const schema = require('../Mongoose/schema.js');
+const { delay } = require('../Utility/functions');
 
 module.exports = {
     name: 'messageCreate',
@@ -11,13 +12,12 @@ module.exports = {
 
         if (message.author.bot) return;
         
-        await schema.server.findOne( { guild: message.guild.id }).then(result => {
+        const result = await schema.server.findOne( { guild: message.guild.id });
+        if (result) {
             prefix = result.prefix;
             member = result.member;
-        });
-        
+        }
         if (!message.content.startsWith(prefix)) return;
-        
         const index = message.content.indexOf(' ');
         if (index === -1) {
             cmd = message.content.substring(1);
@@ -27,9 +27,24 @@ module.exports = {
         }
 
         requirements = client.commands.get(cmd);
+        if (!requirements) {
+            message.channel.send('Not a command.');
+            await delay(2000);
+            message.channel.bulkDelete(2);
+            return;
+        }
+
+        if (!result && cmd !== 'setup' && cmd !== '') {
+            console.log(cmd);
+            message.channel.send('Before using commands, please use +setup to setup the bot for your server.');
+            await delay(2000);
+            message.channel.bulkDelete(2);
+            return;
+        }
 
         if (requirements) {
             let {
+                args,
                 minArgs = 0,
                 maxArgs = null,
                 permissions = [],
@@ -60,10 +75,7 @@ module.exports = {
                 message.reply(`Please use this usage: ${prefix}${cmd} ${args}`);
                 return;
             }
-
             execute(message, arguments);
-            return;
         }
-        
     }
 }

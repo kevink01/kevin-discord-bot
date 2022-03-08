@@ -5,6 +5,7 @@ const fs = require('fs');
 module.exports = {
     name: 'help',
     maxArgs: 0,
+    roles: ['Member'],
     description: 'A command for finding more information about other available commands',
     execute(message, args) {
         let commands = [];
