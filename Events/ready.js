@@ -11,7 +11,6 @@ module.exports = {
         }).then(
             console.log('   << Connection to mongodb successful!')
         );
-        
         client.guilds.cache.forEach(guild => {
             let inviteList = new Discord.Collection();
             guild.invites.fetch().then(async (invite) => {

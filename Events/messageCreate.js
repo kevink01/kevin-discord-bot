@@ -75,10 +75,7 @@ module.exports = {
                 message.reply(`Please use this usage: ${prefix}${cmd} ${args}`);
                 return;
             }
-
             execute(message, arguments);
-            return;
         }
-        
     }
 }
