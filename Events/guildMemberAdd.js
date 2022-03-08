@@ -1,16 +1,23 @@
 const { invites } = require('./ready')
 const { Discord } = require('../index');
+const schema = require('../Mongoose/schema.js');
 
 module.exports = {
     name: 'guildMemberAdd',
     on: true,
     async execute(member) {
-        const channel = member.guild.channels.cache.find(ch => ch.id === '872523760228503603');
-        if (!channel) {
+        let welcomeChannel;
+        let logChannel;
+        await schema.server.findOne( { guild: member.guild.id }).then(result => {
+            welcomeChannel = member.guild.channels.cache.find(c => c.id === result.welcome);
+            logChannel = member.guild.channels.cache.find(c => c.id === result.logging);
+        })
+
+        if (!welcomeChannel) {
             console.log('Could not find the channel.');
             return;
         }
-        const guildInvites = invites.get(member.guild.id);
+        /*const guildInvites = invites.get(member.guild.id);
         var inv = undefined;
         await member.guild.invites.fetch().then(list => {
             list.forEach(code => {
@@ -19,15 +26,21 @@ module.exports = {
                     guildInvites.set(code.code, code.uses);
                 }
             })
-        })
+        });*/
+        let joined = await new Date();
         let memberJoin = new Discord.MessageEmbed()
             .setAuthor(`${member.user.username}`, member.user.displayAvatarURL())
-            .setDescription(`**Member #${member.guild.memberCount}**`)
-            .setColor('YELLOW')
+            .addFields(
+                { name: 'Member #', value: `${member.guild.memberCount}`, inline: true },
+                { name: 'Joined Date: ', value: `${joined.toLocaleDateString()}`, inline: true },
+                { name: 'Joined Time: ', value: `${joined.toLocaleTimeString()}`, inline: true }
+            )
+            .setColor('RANDOM')
             .setTimestamp();
+            
         
 
-        if (inv) {
+        /*if (inv) {
             memberJoin.addFields(
                 { name: 'Created Account', value: `${new Date(member.user.createdTimestamp).toLocaleDateString()}`},
                 { name: 'Invited by', value: `${inv.inviter}`, inline: true },
@@ -55,7 +68,7 @@ module.exports = {
                     { name: 'Invite URL', value: 'Unknown'}
                 )
             }
-        }
-        channel.send({ embeds: [memberJoin] });
+        }*/
+        welcomeChannel.send({ embeds: [memberJoin] });
     }
 }

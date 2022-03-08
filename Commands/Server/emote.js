@@ -4,7 +4,6 @@ module.exports = {
     args: `<choice> <emoji> [emoji_name]`,
     minArgs: 2,
     maxArgs: 3,
-    roles: ['Staff'],
     permissions: ['MANAGE_EMOJIS_AND_STICKERS'],
     description: 'A utility command to add and remove emojis and stickers to the guild, as well change the name of the emoji/sticker',
     examples: [
