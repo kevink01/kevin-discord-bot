@@ -1,9 +1,10 @@
 import { Command, Event } from "../Interfaces";
 import { Message } from 'discord.js';
+import { EventType } from "../Utility";
 
 export const event: Event = {
     name: 'messageCreate',
-    once: true,
+    type: EventType.once,
     execute: (client, message: Message) => {
         if (message.author.bot || !message.guild || !message.content.startsWith(client.config.prefix)) {
             return;
