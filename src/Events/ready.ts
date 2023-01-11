@@ -1,9 +1,9 @@
 import { Event } from "../Interfaces";
-import { config } from "../config";
+import { EventType } from "../Utility";
 
 export const event: Event = {
     name: 'ready',
-    once: false,
+    type: EventType.on,
     execute: (client) => {
         console.log(`Client logged in as ${client.user.username}`);
     }
