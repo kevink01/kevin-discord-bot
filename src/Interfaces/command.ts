@@ -1,5 +1,5 @@
 import Client from '../Client';
-import { Message } from 'discord.js';
+import { Message, PermissionsString } from 'discord.js';
 
 interface Run {
     (message: Message, client?: Client, args?: string[]);
@@ -13,7 +13,11 @@ interface Example {
 export interface Command {
     name: string;
     description: string;
+    minArgs?: number;
+    maxArgs?: number;
+    permissions?: PermissionsString[];
     aliases?: string[];
+    usage: string;
     examples?: Example[];
     execute: Run;
 }
