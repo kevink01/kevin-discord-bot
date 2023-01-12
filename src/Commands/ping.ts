@@ -3,10 +3,15 @@ import { Command } from "../Interfaces";
 export const command: Command = {
     name: 'ping', 
     description: 'ping command',
-    permissions: ['Administrator'],
+    permissions: ['Administrator', 'DeafenMembers'],
     aliases: ['p'],
-    minArgs: 1,
+    minArgs: 0,
+    maxArgs: 2,
     usage: '?ping',
+    examples: [
+        {command: '?ping', description: 'Replies with \'Pong\''},
+        {command: '?ping hehe', description: 'Replies with \'Pong\''}
+    ],
     execute: async (message) => {
         message.channel.send('Pong');
     }

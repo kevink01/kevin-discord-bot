@@ -15,7 +15,7 @@ class ExtendedClient extends Client {
         await this.readCommand("..\\Commands");
         this.readEvent("..\\Events");
         this.login(config.token).then(() => {
-            this.user.setActivity('Green Day', { type: ActivityType.Listening})
+            this.user.setActivity('Green Day', { type: ActivityType.Listening});
         });
     }
     private load: number = 1;
