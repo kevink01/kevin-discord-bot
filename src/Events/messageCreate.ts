@@ -1,7 +1,7 @@
 import { Command, Event } from "../Interfaces";
 import { Message } from 'discord.js';
 import { EventType } from "../Utility";
-import { bulkDelete } from "../Utility/functions";
+import { bulkDelete } from "../Utility";
 
 export const event: Event = {
     name: 'messageCreate',
@@ -28,7 +28,7 @@ export const event: Event = {
             }
         }
         if (args.length < command.minArgs || (command.maxArgs !== null && args.length > command.maxArgs)) {
-            bulkDelete(message, `Please use this usage: ${command.usage}`, 2000);
+            bulkDelete(message, `Please use this usage: ${command.args}`, 2000);
             return;
         }
         (command as Command).execute(message, client, args);

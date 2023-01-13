@@ -1,2 +1,2 @@
-export { delay, printLoad } from "./functions";
+export { bulkDelete, delay, printLoad } from "./functions";
 export { Direction, EventType }  from "./types";

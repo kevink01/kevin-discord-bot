@@ -6,7 +6,6 @@ export const command: Command = {
     name: 'help', 
     description: 'help command',
     aliases: ['h'],
-    usage: '?help',
     execute: async (message, client) => {
         const menuItems = client.commands.map((cmd: Command) => {
             return {

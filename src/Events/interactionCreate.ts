@@ -1,7 +1,7 @@
 import { EmbedBuilder, Interaction } from "discord.js"
 import { Event } from "../Interfaces"
 import { EventType } from "../Utility"
-import { delay, findFile } from "../Utility/functions"
+import { delay } from "../Utility/functions"
 export const event: Event = {
     name: 'interactionCreate',
     type: EventType.on,
@@ -21,12 +21,13 @@ export const event: Event = {
                         .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL()})
                         .setTitle(`Title: ${command.name}`)
                         .setDescription(`Description: ${command.description}`)
+                        .setColor('Random')
                     if (command.permissions) {
                         let permStr: string = "";
                         for (let i = 0; i < command.permissions.length; i++) {
                             permStr += command.permissions[i] + '\n'
                         }
-                        if (permStr.length > 0) {
+                        if (permStr.length) {
                             embed.addFields({name: 'Required Permissions', value: permStr});
                         }
                     }
@@ -36,13 +37,23 @@ export const event: Event = {
                     if (command.maxArgs) {
                         embed.addFields({name: 'Minimum args', value: command.maxArgs.toString(), inline: true});
                     }
-                    embed.addFields({name: 'Usage', value: command.usage});
+                    if (command.args) {
+                        let argsStr: string = "";
+                        for (const args of command.args) {
+                            argsStr += args.required ? '<' : '[';
+                            argsStr += args.argument;
+                            argsStr += args.required ? '> ' : '] ';
+                        }
+                        if (argsStr.length) {
+                            embed.addFields({name: 'Args', value: argsStr.trim()});
+                        }
+                    }
                     if (command.examples) {
                         let examplesStr = '';
                         for (let i = 0; i < command.examples.length; i++) {
                             examplesStr += '**' + command.examples[i].command + '**: ' + command.examples[i].description + '\n';
                         }
-                        if (examplesStr !== '') {
+                        if (examplesStr.length) {
                             embed.addFields({name: 'Examples', value: examplesStr});
                         }
                     }

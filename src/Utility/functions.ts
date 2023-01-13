@@ -1,6 +1,4 @@
 import { Message } from "discord.js";
-import path from "path";
-import fs from "fs";
 import { Direction } from ".";
 
 export async function bulkDelete(message: Message, content: string, wait: number): Promise<void> {
@@ -28,25 +26,4 @@ export function printLoad(indents: number, direction: Direction, message: string
     }
     print += " " + message;
     console.log(print); 
-}
-
-export function findFile(cmd: string): string | undefined {
-    return findFileHelper('../Commands', cmd)
-}
-
-function findFileHelper(dir: string, value: string) {
-    const files = fs.readdirSync(path.join(__dirname, dir));
-    let temp: string | undefined = undefined;
-    for (const f of files) {
-        const stats = fs.lstatSync(path.join(__dirname, dir, f));
-        if (stats.isDirectory()) {
-            if ((temp = findFile(path.join(dir, f))) !== undefined) {
-                return temp;
-            }
-        }
-        else if (f.endsWith(`${value}.ts`)) {
-            return path.join(dir, f);
-        }
-    }
-    return undefined;
 }

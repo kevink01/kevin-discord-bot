@@ -7,7 +7,10 @@ export const command: Command = {
     aliases: ['p'],
     minArgs: 0,
     maxArgs: 2,
-    usage: '?ping',
+    args: [
+        { argument: 'user', required: true },
+        { argument: 'time', required: false }
+    ],
     examples: [
         {command: '?ping', description: 'Replies with \'Pong\''},
         {command: '?ping hehe', description: 'Replies with \'Pong\''}

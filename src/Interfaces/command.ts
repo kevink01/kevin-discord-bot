@@ -10,14 +10,19 @@ interface Example {
     description: string;
 }
 
+interface Args {
+    argument: string;
+    required: boolean;
+}
+
 export interface Command {
     name: string;
     description: string;
     minArgs?: number;
     maxArgs?: number;
+    args?: Args[];
     permissions?: PermissionsString[];
     aliases?: string[];
-    usage: string;
     examples?: Example[];
     execute: Run;
 }
