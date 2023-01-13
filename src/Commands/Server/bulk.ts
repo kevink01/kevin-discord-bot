@@ -1,4 +1,4 @@
-import { Message, TextChannel } from "discord.js";
+import { Collection, Message, TextChannel } from "discord.js";
 import { Command } from "../../Interfaces";
 import { resultPrint, delay } from "../../Utility";
 
@@ -27,8 +27,8 @@ export const command: Command = {
         }
         const textChannel: TextChannel = message.channel as TextChannel;
         await textChannel.messages.delete(message).then(async () => {
-            await textChannel.bulkDelete(messageCount).then(async () => {
-                textChannel.send(`Deleted ${messageCount} messages`).then(async (m: Message) => {
+            await textChannel.bulkDelete(messageCount).then(async (collection: Collection<string, Message>) => {
+                textChannel.send(`Deleted ${collection.size} messages`).then(async (m: Message) => {
                     await delay(2000);
                     m.delete();
                 })
