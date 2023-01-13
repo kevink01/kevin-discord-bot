@@ -24,7 +24,6 @@ export const command: Command = {
             resultPrint(message, 'Couldn\'t find user', 2000);
             return;
         }
-        console.log(user.kickable);
         if (!user.kickable) {
             resultPrint(message, `Unable to kick member ${user.user.username}`, 2000);
             return;
