@@ -21,7 +21,7 @@ export const event: Event = {
                         .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL()})
                         .setTitle(`Title: ${command.name}`)
                         .setDescription(`Description: ${command.description}`)
-                        .setColor('Random')
+                        .setColor('Random');
                     if (command.permissions) {
                         let permStr: string = "";
                         for (let i = 0; i < command.permissions.length; i++) {

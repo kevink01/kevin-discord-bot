@@ -28,7 +28,7 @@ export const event: Event = {
             }
         }
         if (args.length < command.minArgs || (command.maxArgs !== null && args.length > command.maxArgs)) {
-            bulkDelete(message, `Please use this usage: ${command.args}`, 2000);
+            bulkDelete(message, `Please use this usage: ${command.args.map((arg) => {return arg.argument})}`, 2000);
             return;
         }
         (command as Command).execute(message, client, args);
