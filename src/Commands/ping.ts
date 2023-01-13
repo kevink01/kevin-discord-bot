@@ -12,8 +12,8 @@ export const command: Command = {
         { argument: 'time', required: false }
     ],
     examples: [
-        {command: '?ping', description: 'Replies with \'Pong\''},
-        {command: '?ping hehe', description: 'Replies with \'Pong\''}
+        {command: 'ping', description: 'Replies with \'Pong\''},
+        {command: 'ping hehe', description: 'Replies with \'Pong\''}
     ],
     execute: async (message) => {
         message.channel.send('Pong');

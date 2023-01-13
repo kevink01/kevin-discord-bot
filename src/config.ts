@@ -5,5 +5,5 @@ dotenv.config();
 
 export const config: Config = {
     token: process.env.TOKEN,
-    prefix: '?'
+    prefix: '+'
 }

@@ -1,6 +1,6 @@
 import { Attachment, GuildStickerCreateOptions, GuildStickerEditData, GuildStickerManager, Message, Sticker } from "discord.js";
 import { Command } from "../../Interfaces";
-import { bulkDelete, delay } from "../../Utility";
+import { resultPrint, delay } from "../../Utility";
 
 export const command: Command = {
     name: 'sticker',
@@ -15,10 +15,10 @@ export const command: Command = {
     permissions: ['ManageEmojisAndStickers'],
     aliases: ['stick', 'st'],
     examples: [
-        { command: '?sticker add name', description: 'Adds sticker "name" to guild' },
-        { command: '?sticker add name tag1 tag2', description: 'Adds sticker "name" to guild with tags' },
-        { command: '?sticker delete name:', description: 'Removes sticker "name" from guild' },
-        { command: '?sticker rename old_name new_name', description: 'Renames :example: to :ex:' },
+        { command: 'sticker add name', description: 'Adds sticker "name" to guild' },
+        { command: 'sticker add name tag1 tag2', description: 'Adds sticker "name" to guild with tags' },
+        { command: 'sticker delete name:', description: 'Removes sticker "name" from guild' },
+        { command: 'sticker rename old_name new_name', description: 'Renames :example: to :ex:' },
     ],
     execute: async (message, client, args) => {
         switch(args[0].toLowerCase()) {
@@ -26,11 +26,11 @@ export const command: Command = {
                 console.log(message.attachments.first());
                 const attach: Attachment = message.attachments.first();
                 if (!attach) {
-                    bulkDelete(message, 'Please provide a sticker attachment', 2000);
+                    resultPrint(message, 'Please provide a sticker attachment', 2000);
                     return;
                 }
                 if (!attach.contentType.startsWith('image')) {
-                    bulkDelete(message, 'Sticker must be png/gif', 2000);
+                    resultPrint(message, 'Sticker must be png/gif', 2000);
                     return;
                 }
                 
@@ -51,7 +51,7 @@ export const command: Command = {
             case 'del':
                 let delSticker: Sticker = message.guild.stickers.cache.find((s) => s.name === args[1]);
                 if (!delSticker) {
-                    bulkDelete(message, 'Couldn\'t find sticker. Try again.', 2000);
+                    resultPrint(message, 'Couldn\'t find sticker. Try again.', 2000);
                     return;
                 }
                 try {
@@ -70,7 +70,7 @@ export const command: Command = {
             case 'rename':
                 let renameSticker = message.guild.stickers.cache.find((s) => s.name === args[1]);
                 if (!renameSticker) {
-                    bulkDelete(message, 'Couldn\'t find sticker. Try again.', 2000);
+                    resultPrint(message, 'Couldn\'t find sticker. Try again.', 2000);
                     return;
                 }
                 try {
@@ -89,7 +89,7 @@ export const command: Command = {
             case 'tag':
                 let tagSticker = message.guild.stickers.cache.find((s) => s.name === args[1]);
                 if (!tagSticker) {
-                    bulkDelete(message, 'Couldn\'t find sticker. Try again.', 2000);
+                    resultPrint(message, 'Couldn\'t find sticker. Try again.', 2000);
                     return;
                 }
                 try {

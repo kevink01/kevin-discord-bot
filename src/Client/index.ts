@@ -31,7 +31,7 @@ class ExtendedClient extends Client {
                 const {command} = await require(`${__dirname}/${dir}/${file}`);
                 
                 this.commands.set(command.name, command);
-                let aliases: string = "";
+                let aliases: string = '';
                 
                 if (command?.aliases) {
                     command.aliases.forEach((alias) => {

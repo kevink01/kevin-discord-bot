@@ -23,7 +23,7 @@ export const event: Event = {
                         .setDescription(`Description: ${command.description}`)
                         .setColor('Random');
                     if (command.permissions) {
-                        let permStr: string = "";
+                        let permStr: string = '';
                         for (let i = 0; i < command.permissions.length; i++) {
                             permStr += command.permissions[i] + '\n'
                         }
@@ -38,7 +38,7 @@ export const event: Event = {
                         embed.addFields({name: 'Minimum args', value: command.maxArgs.toString(), inline: true});
                     }
                     if (command.args) {
-                        let argsStr: string = "";
+                        let argsStr: string = '';
                         for (const args of command.args) {
                             argsStr += args.required ? '<' : '[';
                             argsStr += args.argument;
@@ -51,7 +51,7 @@ export const event: Event = {
                     if (command.examples) {
                         let examplesStr = '';
                         for (let i = 0; i < command.examples.length; i++) {
-                            examplesStr += '**' + command.examples[i].command + '**: ' + command.examples[i].description + '\n';
+                            examplesStr += '**' + client.config.prefix + command.examples[i].command + '**: ' + command.examples[i].description + '\n';
                         }
                         if (examplesStr.length) {
                             embed.addFields({name: 'Examples', value: examplesStr});

@@ -1,6 +1,6 @@
 import { Message, TextChannel } from "discord.js";
 import { Command } from "../../Interfaces";
-import { bulkDelete, delay } from "../../Utility";
+import { resultPrint, delay } from "../../Utility";
 
 export const command: Command = {
     name: 'bulk',
@@ -13,16 +13,16 @@ export const command: Command = {
     permissions: ['ManageMessages'],
     aliases: ['delete', 'del', 'purgeChat'],
     examples: [
-        { command: '?bulk 10', description: 'Deletes last 10 messages'}
+        { command: 'bulk 10', description: 'Deletes last 10 messages'}
     ],
     execute: async (message, client, args) => {
         const messageCount: number = Number(args[0]);
         if (isNaN(messageCount)) {
-            bulkDelete(message, 'Not a number!', 2000);
+            resultPrint(message, 'Not a number!', 2000);
             return;
         }
         if (messageCount <= 0 || messageCount >= 100) {
-            bulkDelete(message, 'Must be between 0 and 100.', 2000);
+            resultPrint(message, 'Must be between 0 and 100.', 2000);
             return;
         }
         const textChannel: TextChannel = message.channel as TextChannel;

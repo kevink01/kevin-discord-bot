@@ -1,6 +1,6 @@
 import { GuildEmoji, Message, parseEmoji } from "discord.js";
 import { Command } from "../../Interfaces";
-import { bulkDelete, delay } from "../../Utility";
+import { resultPrint, delay } from "../../Utility";
 
 export const command: Command = {
     name: 'emote',
@@ -15,15 +15,15 @@ export const command: Command = {
     permissions: ['ManageEmojisAndStickers'],
     aliases: ['emoji', 'em'],
     examples: [
-        { command: '?emote add :example:', description: 'Adds :example" to guild' },
-        { command: '?emote add :example: :ex:', description: 'Adds :ex: to guild' },
-        { command: '?emote delete :example:', description: 'Removes :example: from guild' },
-        { command: '?emote rename :example: ex', description: 'Renames :example: to :ex:' },
+        { command: 'emote add :example:', description: 'Adds :example" to guild' },
+        { command: 'emote add :example: :ex:', description: 'Adds :ex: to guild' },
+        { command: 'emote delete :example:', description: 'Removes :example: from guild' },
+        { command: 'emote rename :example: ex', description: 'Renames :example: to :ex:' },
     ],
     execute: (message, client, args) => {
         const emoji = parseEmoji(args[1]);
         if (!emoji) {
-            bulkDelete(message, 'Couldn\'t find emoji. Try again.', 2000);
+            resultPrint(message, 'Couldn\'t find emoji. Try again.', 2000);
             return;
         }
         switch(args[0].toLowerCase()) {
@@ -50,7 +50,7 @@ export const command: Command = {
             case 'del':
                 let delEmote = message.guild.emojis.cache.find((e) => e.id === emoji.id);
                 if (!delEmote) {
-                    bulkDelete(message, 'Couldn\'t find emoji. Try again.', 2000);
+                    resultPrint(message, 'Couldn\'t find emoji. Try again.', 2000);
                     return;
                 }
                 try {
@@ -69,7 +69,7 @@ export const command: Command = {
             case 'rename':
                 let renameEmote = message.guild.emojis.cache.find((e) => e.id === emoji.id);
                 if (!renameEmote) {
-                    bulkDelete(message, 'Couldn\'t find emoji. Try again.', 2000);
+                    resultPrint(message, 'Couldn\'t find emoji. Try again.', 2000);
                     return;
                 }
                 try {

@@ -1,13 +1,13 @@
 import { EmbedBuilder } from "@discordjs/builders";
 import { GuildMember } from "discord.js";
 import { Event } from "../Interfaces";
-import { bulkDelete, EventType } from "../Utility";
+import { EventType } from "../Utility";
 
 export const event: Event = {
     name: 'guildMemberAdd',
     type: EventType.on,
     execute: async (client, member: GuildMember) =>  {
-        if (member.guild.systemChannel) {
+        if (!member.guild.systemChannel) {
             return;   
         }
         const joinedTimestamp = await new Date();
@@ -19,6 +19,7 @@ export const event: Event = {
                 { name: 'Joined Time: ', value: `${joinedTimestamp.toLocaleTimeString()}`, inline: true }
             )
             .setTimestamp();
+            
         member.guild.systemChannel.send({ embeds: [embed]});
     }
 }

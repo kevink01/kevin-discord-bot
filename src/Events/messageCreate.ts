@@ -1,7 +1,6 @@
 import { Command, Event } from "../Interfaces";
 import { Message } from 'discord.js';
-import { EventType } from "../Utility";
-import { bulkDelete } from "../Utility";
+import { EventType, resultPrint } from "../Utility";
 
 export const event: Event = {
     name: 'messageCreate',
@@ -16,19 +15,19 @@ export const event: Event = {
         if (!cmd) return;
         const command = client.commands.get(cmd) || client.aliases.get(cmd);
         if (!command) {
-            bulkDelete(message, 'Unknown command', 2000);
+            resultPrint(message, 'Unknown command', 2000);
             return;
         }
         if (command.permissions) {
             for (let perm of command.permissions) {
                 if (!message.member.permissions.has(perm)) {
-                    bulkDelete(message, `User missing permission: ${perm}`, 2000);
+                    resultPrint(message, `User missing permission: ${perm}`, 2000);
                     return;
                 }
             }
         }
         if (args.length < command.minArgs || (command.maxArgs !== null && args.length > command.maxArgs)) {
-            bulkDelete(message, `Please use this usage: ${command.args.map((arg) => {return arg.argument})}`, 2000);
+            resultPrint(message, `Please use this usage: ${command.args.map((arg) => {return arg.argument})}`, 2000);
             return;
         }
         (command as Command).execute(message, client, args);

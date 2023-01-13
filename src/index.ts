@@ -1,3 +1,10 @@
 import Client from './Client';
 
-new Client({intents: ['Guilds', 'GuildMessages', 'GuildMembers', 'MessageContent']}).init();
+new Client({intents: [
+    'AutoModerationExecution',
+    'DirectMessages',
+    'Guilds', 
+    'GuildMessages', 
+    'GuildMembers', 
+    'MessageContent'
+]}).init();

@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { Direction } from ".";
 
-export async function bulkDelete(message: Message, content: string, wait: number): Promise<void> {
+export async function resultPrint(message: Message, content: string, wait: number): Promise<void> {
     await message.reply(content).then(async (m: Message) => {
         await delay(wait);
         m.delete();
@@ -15,7 +15,7 @@ export async function delay(ms: number): Promise<void> {
 }
 
 export function printLoad(indents: number, direction: Direction, message: string): void {
-    let print: string = "";
+    let print: string = '';
     for (let i = 0; i < indents; i++) {
         print += " ";
     }
