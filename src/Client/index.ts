@@ -13,7 +13,7 @@ class ExtendedClient extends Client {
 
     public async init() {
         await this.readCommand("..\\Commands");
-        this.readEvent("..\\Events");
+        await this.readEvent("..\\Events");
         this.login(config.token).then(() => {
             this.user.setActivity('Green Day', { type: ActivityType.Listening});
         });
@@ -25,7 +25,7 @@ class ExtendedClient extends Client {
         for (const file of files) {
             const stats = lstatSync(path.join(__dirname, dir, file));
             if (stats.isDirectory()) {
-                this.readCommand(path.join(dir, file));
+                await this.readCommand(path.join(dir, file));
             }
             else {
                 const {command} = await require(`${__dirname}/${dir}/${file}`);
@@ -54,7 +54,7 @@ class ExtendedClient extends Client {
         for (const file of files) {
             const stats = lstatSync(path.join(__dirname, dir, file));
             if (stats.isDirectory()) {
-                this.readEvent(path.join(dir, file));
+                await this.readEvent(path.join(dir, file));
             }
             else {
                 const {event} = await require(`${__dirname}/${dir}/${file}`);                

@@ -34,12 +34,12 @@ export const command: Command = {
                 }
                 const url = `https://cdn.discordapp.com/emojis/${emoji.id}${extension}`;
                 try {
-                    message.guild.emojis.create({attachment: url, name: emoji.name}).then((newEmoji: GuildEmoji) => {
-                        message.delete();
-                        message.channel.send(`Successfully added ${newEmoji} to the server!`).then(async (m: Message) => {
+                    message.guild.emojis.create({attachment: url, name: emoji.name}).then(async (newEmoji: GuildEmoji) => {
+                        await message.channel.send(`Successfully added ${newEmoji} to the server!`).then(async (m: Message) => {
                             await delay(2000);
                             m.delete();
                         });
+                        message.delete();
                     });
                 } catch (err) {
                     console.error(err);
@@ -54,12 +54,12 @@ export const command: Command = {
                     return;
                 }
                 try {
-                    message.guild.emojis.delete(delEmote).then(() => {
-                        message.delete();
-                        message.channel.send(`Successfully deleted ${emoji.name}`).then(async (m: Message) => {
+                    message.guild.emojis.delete(delEmote).then(async () => {
+                        await message.channel.send(`Successfully deleted ${emoji.name}`).then(async (m: Message) => {
                             await delay(2000);
                             m.delete();
                         });
+                        message.delete();
                     });
                 } catch (err) {
                     console.error(err);
@@ -74,11 +74,11 @@ export const command: Command = {
                 }
                 try {
                     message.guild.emojis.edit(renameEmote, {name: args[2]}).then(async (newEmoji: GuildEmoji) => {
-                        message.delete();
-                        message.channel.send(`New emoji name for emoji ${newEmoji}: ${newEmoji.name}`).then(async (m: Message) => {
+                        await message.channel.send(`New emoji name for emoji ${newEmoji}: ${newEmoji.name}`).then(async (m: Message) => {
                             await delay(2000);
                             m.delete();
                         });
+                        message.delete();
                     });
                 } catch (err) {
                     console.error(err);
