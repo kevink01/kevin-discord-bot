@@ -29,7 +29,7 @@ module.exports = {
             return;
         }
         const embed = new Discord.MessageEmbed()
-        .setColor("DARK_RED")
+        .setColor('DARK_RED')
         .setAuthor(`${client.user.username}`, client.user.displayAvatarURL())
         .setTitle(`You were kicked from ${message.guild.name}`)
         .addFields(
