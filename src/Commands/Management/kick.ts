@@ -1,4 +1,4 @@
-import { EmbedBuilder, GuildMember, Message } from "discord.js";
+import { DMChannel, EmbedBuilder, GuildMember, Message } from "discord.js";
 import { Command } from "../../Interfaces";
 import { resultPrint, delay } from "../../Utility";
 
@@ -18,8 +18,8 @@ export const command: Command = {
         { command: 'kick userID reason', description: 'Kick user & provide reason'}
     ],
     execute: async (message, client, args) => {
-        let reason = args[1] ?? 'Not specified';
-        const user: GuildMember = await message.mentions.members.first() || await message.guild.members.cache.find((m) => m.id === args[0])
+        let reason = args.slice(1).join(' ') ?? 'Not specified';
+        const user: GuildMember = await message.mentions.members.first() || await message.guild.members.cache.find((m) => m.id === args[0]);
         if (!user) {
             resultPrint(message, 'Couldn\'t find user', 2000);
             return;
@@ -35,17 +35,28 @@ export const command: Command = {
         .addFields(
             { name: 'Reason:', value: `${reason}` }
         );
-        try {
+        user.createDM().then(async (channel: DMChannel) => {
+            channel.send({embeds: [embed]}).catch((err) => {
+                console.error(err);
+                return;
+            });
             user.kick(reason).then(async () => {
-                        await message.reply(`Successfully kicked ${user.user.username}`).then(async (m: Message) => {
-                            await delay(2000);
-                            m.delete();
-                        });
-                        message.delete();
-                    });
-        } catch (err)  {
+                await message.reply(`Successfully kicked ${user.user.username}`).then(async (m: Message) => {
+                    await delay(2000);
+                    m.delete();
+                });
+                message.delete();
+            });
+        }).catch((err) => {
             console.error(err);
+            user.kick(reason).then(async () => {
+                await message.reply(`Successfully kicked ${user.user.username}`).then(async (m: Message) => {
+                    await delay(2000);
+                    m.delete();
+                });
+                message.delete();
+            });
             return;
-        }
+        });
     }
 }

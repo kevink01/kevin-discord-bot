@@ -27,7 +27,7 @@ export const event: Event = {
             }
         }
         if (args.length < command.minArgs || (command.maxArgs !== null && args.length > command.maxArgs)) {
-            resultPrint(message, `Please use this usage: ${command.args.map((arg) => {return arg.argument})}`, 2000);
+            resultPrint(message, `Please use this usage: ${client.config.prefix}${command.name} ${command.args.map((arg) => {return arg.argument}).join(' ')}`, 2000);
             return;
         }
         (command as Command).execute(message, client, args);
