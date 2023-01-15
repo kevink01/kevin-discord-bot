@@ -11,11 +11,11 @@ export const command: Command = {
         { argument: 'reason', required: true }
     ],
     permissions: ['BanMembers'],
-    aliases: ['boot', 'hammer'],
+    aliases: ['b', 'boot', 'hammer'],
     examples: [
         { command: 'ban @user', description: 'Bans user via mention' },
         { command: 'ban userID', description: 'Bans user via ID' },
-        { command: 'ban userID bad attitude', description: 'Bans user with reason \'nad attitude\''}
+        { command: 'ban userID bad attitude', description: 'Bans user with reason \'bad attitude\''}
     ],
     execute: async (message, client, args) => {
         let reason = args.slice(1).join(' ') ?? 'Not specified';

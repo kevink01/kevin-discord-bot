@@ -11,6 +11,7 @@ export const command: Command = {
         { argument: 'reason', required: false }
     ],
     permissions: ['BanMembers'],
+    aliases: ['ub'],
     examples: [
         { command: 'unban userID', description: 'Unbans user by ID' },
         { command: 'unban userID he improved', description: 'Unbans userID with reason' }
