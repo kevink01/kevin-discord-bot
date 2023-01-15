@@ -1,4 +1,4 @@
-import { GuildBan, Message, User } from "discord.js";
+import { Message } from "discord.js";
 import { Command } from "../../Interfaces";
 import { delay, resultPrint } from "../../Utility";
 

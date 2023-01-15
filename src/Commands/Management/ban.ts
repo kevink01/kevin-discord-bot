@@ -1,4 +1,4 @@
-import { DMChannel, EmbedBuilder, GuildMember, Message, User } from "discord.js";
+import { DMChannel, EmbedBuilder, GuildMember, Message } from "discord.js";
 import { Command } from "../../Interfaces";
 import { delay, resultPrint } from "../../Utility";
 
