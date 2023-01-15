@@ -1,11 +1,24 @@
-import { EmbedBuilder, Interaction } from "discord.js"
-import { Event } from "../Interfaces"
-import { EventType } from "../Utility"
-import { delay } from "../Utility/functions"
+import { ChatInputCommandInteraction, EmbedBuilder, Interaction, Message } from "discord.js"
+import { Event, SlashCommand } from "../Interfaces"
+import { EventType, delay } from "../Utility"
+
 export const event: Event = {
     name: 'interactionCreate',
     type: EventType.on,
     execute: async (client, interaction: Interaction) => {
+        if (interaction.isChatInputCommand()) {
+            const slashCommand: SlashCommand = client.slashCommands.get(interaction.commandName);
+            if (!slashCommand) {
+                await interaction.reply({ content: 'Couldn\'t find command', fetchReply: true }).then(async (message: Message) => {
+                    await delay(2000);
+                    message.delete();
+                });
+                interaction.deleteReply();
+                return;
+            }
+            slashCommand.execute(interaction as ChatInputCommandInteraction, client);
+            return;
+        }
         if (interaction.isStringSelectMenu()) {
             switch(interaction.customId) {
                 case 'Help Menu':

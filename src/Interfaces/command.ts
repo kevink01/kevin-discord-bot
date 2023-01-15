@@ -1,18 +1,9 @@
 import Client from '../Client';
 import { Message, PermissionsString } from 'discord.js';
+import { Args, Example } from '../Utility';
 
 interface Run {
     (message: Message, client?: Client, args?: string[]);
-}
-
-interface Example {
-    command: string;
-    description: string;
-}
-
-interface Args {
-    argument: string;
-    required: boolean;
 }
 
 export interface Command {
