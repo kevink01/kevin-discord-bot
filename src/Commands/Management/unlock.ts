@@ -6,7 +6,7 @@ export const command: Command = {
   name: "unlock",
   description: "Unocks the current channel",
   permissions: ["ManageChannels"],
-  aliases: [""],
+  aliases: ["ul"],
   execute: async (message, client) => {
     let role: Role = client.config.defaults.memberRole;
     if (!role) {
