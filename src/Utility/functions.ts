@@ -1,8 +1,24 @@
-import { Message } from 'discord.js';
+import { Collection, GuildMember, Message } from 'discord.js';
 import { Direction } from '.';
 
 export async function delay(ms: number): Promise<void> {
 	return new Promise((res) => setTimeout(res, ms));
+}
+
+export async function findMember(message: Message, id?: string): Promise<GuildMember> {
+	let user: GuildMember = message.mentions.members.first();
+	if (user) return user;
+	await message.guild.members
+		.fetch()
+		.then((v: Collection<string, GuildMember>) => {
+			user = v.find((m: GuildMember) => m.id === id);
+		})
+		.catch((err) => {
+			console.error(err);
+			return undefined;
+		});
+	console.log(user);
+	return user;
 }
 
 export function printLoad(indents: number, direction: Direction, message: string): void {
@@ -37,6 +53,5 @@ export async function resultPrint(message: Message, content: string, wait: numbe
 		.catch((err) => {
 			console.error(err);
 		});
-
 	return;
 }

@@ -1,5 +1,5 @@
 // Functions
-export { delay, printLoad, resultPrint } from './functions';
+export { delay, findMember, printLoad, resultPrint } from './functions';
 
 // Enumerations
 export { Direction, EventType, Setup } from './types';

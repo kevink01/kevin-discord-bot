@@ -1,6 +1,6 @@
 import { Collection, ColorResolvable, GuildMember, Role } from 'discord.js';
 import { Command } from '../../Interfaces';
-import { delay, resultPrint } from '../../Utility';
+import { delay, findMember, resultPrint } from '../../Utility';
 
 export const command: Command = {
 	name: 'role',
@@ -85,12 +85,7 @@ export const command: Command = {
 				break;
 			case 'add':
 				{
-					let user: GuildMember = message.mentions.members.first();
-					if (!user) {
-						await message.guild.members.fetch().then((v: Collection<string, GuildMember>) => {
-							user = v.find((m: GuildMember) => m.id === args[1]);
-						});
-					}
+					const user: GuildMember = await findMember(message, args[1]);
 					if (!user) {
 						resultPrint(message, "Couldn't find user", 2000);
 						return;
@@ -112,12 +107,7 @@ export const command: Command = {
 				}
 				break;
 			case 'remove': {
-				let user: GuildMember = message.mentions.members.first();
-				if (!user) {
-					await message.guild.members.fetch().then((v: Collection<string, GuildMember>) => {
-						user = v.find((m: GuildMember) => m.id === args[1]);
-					});
-				}
+				const user: GuildMember = await findMember(message, args[1]);
 				if (!user) {
 					resultPrint(message, "Couldn't find user", 2000);
 					return;

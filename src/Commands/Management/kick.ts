@@ -1,6 +1,6 @@
 import { DMChannel, EmbedBuilder, GuildMember, Message } from 'discord.js';
 import { Command } from '../../Interfaces';
-import { resultPrint, delay } from '../../Utility';
+import { resultPrint, delay, findMember } from '../../Utility';
 
 export const command: Command = {
 	name: 'kick',
@@ -22,8 +22,7 @@ export const command: Command = {
 	],
 	execute: async (message, client, args) => {
 		let reason = args.slice(1).join(' ') ?? 'Not specified';
-		const user: GuildMember =
-			(await message.mentions.members.first()) || (await message.guild.members.cache.find((m) => m.id === args[0]));
+		const user: GuildMember = await findMember(message, args[0]);
 		if (!user) {
 			resultPrint(message, "Couldn't find user", 2000);
 			return;
