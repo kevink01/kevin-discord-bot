@@ -5,6 +5,8 @@ export { delay, findMember, printLoad, resultPrint } from './functions';
 export { Direction, EventType, Setup } from './types';
 // Interfaces
 export { Args, Defaults, Example } from './types';
+// Constants
+export { servers } from './types';
 
 // Command Helper Functions
 // Slash
@@ -16,5 +18,5 @@ export {
 	editSetup,
 	handleError,
 	resetDefaults,
-	startSetup
+	startSetup,
 } from './Slashcommands/setup';
