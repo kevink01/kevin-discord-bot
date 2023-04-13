@@ -1,8 +1,8 @@
-import { Defaults } from "../Utility";
+import { Defaults } from '../Utility';
 
 export interface Config {
-  token: string;
-  prefix: string;
-  mongoURI?: string;
-  defaults?: Defaults;
+	token: string;
+	prefix: string;
+	mongoURI?: string;
+	defaults?: Defaults;
 }

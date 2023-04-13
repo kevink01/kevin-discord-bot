@@ -1,30 +1,30 @@
 {
-  "name": "kevindiscordbot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
-  "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kevink01/test.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kevink01/test/issues"
-  },
-  "homepage": "https://github.com/kevink01/test#readme",
-  "dependencies": {
-    "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.18",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^4.9.4"
-  }
+	"name": "kevindiscordbot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/index.ts",
+	"scripts": {
+		"start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kevink01/KevinDiscordBot.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/kevink01/KevinDiscordBot/issues"
+	},
+	"homepage": "https://github.com/kevink01/KevinDiscordBot#readme",
+	"dependencies": {
+		"discord.js": "^14.7.1",
+		"dotenv": "^16.0.3"
+	},
+	"devDependencies": {
+		"@types/node": "^18.11.18",
+		"ts-node": "^10.9.1",
+		"ts-node-dev": "^2.0.0",
+		"typescript": "^4.9.4"
+	}
 }
