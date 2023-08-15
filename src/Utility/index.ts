@@ -7,6 +7,7 @@ export { Direction, EventType, Setup } from './types';
 export { Args, Defaults, Example } from './types';
 // Constants
 export { servers } from './types';
+export { emotePath } from './path';
 
 // Command Helper Functions
 // Slash
